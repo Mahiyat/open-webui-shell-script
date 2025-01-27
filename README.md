@@ -1,6 +1,6 @@
 # Open WebUI with Ollama Setup Script
 
-This repository contains a shell script to set up and configure Open WebUI with the Ollama AI model.
+This repository contains a shell script to set up and configure Open WebUI with Ollama.
 
 ## Prerequisites
 
