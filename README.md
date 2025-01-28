@@ -8,13 +8,12 @@ Before running the script, ensure you have the following installed on your syste
 - Docker
 - GPU drivers compatible with Docker and NVIDIA
 - Sufficient disk space for the models and data volumes
-
-N.B. To run the docker container without GPU support remove ```--gpus=all``` from line 21 of the setup_open_webui.sh file.
+- The models folder copied from [AUTOMATIC1111](https://github.com/AUTOMATIC1111/stable-diffusion-webui) GitHub repository to the same directory as the ```docker-compose.yml```
 
 ## Usage
 
 1. **Clone the repository or copy the script:**
-   Save the `setup_open_webui.sh` file in your preferred directory.
+   Save the `setup_open_webui.sh` and the `docker-compose.yml` files in your preferred directory.
 
 2. **Make the script executable:**
    ```bash
@@ -24,19 +23,26 @@ N.B. To run the docker container without GPU support remove ```--gpus=all``` fro
    ./setup_open_webui.sh
 ## What the Script Does
 
-1. **Runs a Docker container:**
+1. **Runs the Docker containers:**
 
-    * Launches the Open WebUI container with GPU support.
-    * Maps volumes for persistent data storage:
-        * ollama volume for model files.
-        * open-webui volume for backend data.
-    * Exposes port 3000 to access the web UI.
+    * Initializes and builds the necessary containers using docker compose up -d --build. This command starts both the Open WebUI and Stable Diffusion services as defined in the ```docker-compose.yml```.
+    * Allows the containers to utilize GPU resources for accelerated processing.
+    * Configures volumes.
+        * auto1111-data and auto1111-output for Stable Diffusion.
+        * ollama and open-webui for Open WebUI and Ollama model storage.
+    * Exposes ports.
+        * Port 7860 is exposed for Stable Diffusion, enabling API access to the diffusion models.
+        * Port 3000 is exposed for Open WebUI, providing access to the application interface.
     * Automatically restarts the container on failure.
   
 2. **Downloads required AI models:**
    
     * Pulls the llama3.2 model.
     * Pulls the llava model.
+    * Pulls the DeepSeek-R1-Distill-Qwen-7B model.
+    * Pulls the stable-diffusion-prompt-generator model.
+    * Pulls the codellama model.
+    * Pulls the DeepSeek-R1-Distill-Llama-8B model.
   
 3. **Ensures smooth setup with error handling:**
 
@@ -48,6 +54,15 @@ Once the script finishes:
 
 1. Open a browser and navigate to http://localhost:3000 to access the web interface.
 2. Start interacting with the models.
+
+## Image Generation Setup
+1. Go to Profile Icon -> Settings -> Admin Settings -> Images.
+2. Select Automatic1111 as Image Generation Engine.
+3. Paste http://stable-diffusion:7860 in the AUTOMATIC1111 Base URL and click on the refresh icon at the right side of the text box to connect to the stable diffusion server. Note that ```stable-diffusion``` in the URL is the name of the docker container.
+4. Turn On Image Generation.
+5. Set ```v1-5-pruned-emaonly``` as the default model.
+6. Save the settings.
+![Open WebUI Image Generation](resources/images/open-webui-image-generation-setup.png)
 
 ## Troubleshooting
 If the setup script fails:
