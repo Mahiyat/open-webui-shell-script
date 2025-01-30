@@ -2,6 +2,10 @@
 
 This repository contains a shell script to set up and configure Open WebUI with Ollama.
 
+
+https://github.com/user-attachments/assets/4dbb7ed6-ba18-41be-83d0-62d6f3cf2514
+
+
 ## My System Configuration:
 - Processor: Intel Core i7-11800H (8 Cores, 16 Threads) @ 2.30GHz
 - RAM: 16GB
@@ -68,6 +72,12 @@ Once the script finishes:
 5. Set ```v1-5-pruned-emaonly``` as the default model.
 6. Save the settings.
 ![Open WebUI Image Generation](resources/images/open-webui-image-generation-setup.png)
+
+## RAG Setup
+
+
+https://github.com/user-attachments/assets/e92edcaf-ff40-4448-bc14-5650104c6c33
+
 
 ## Troubleshooting
 If the setup script fails:
