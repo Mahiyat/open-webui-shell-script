@@ -2,6 +2,11 @@
 
 This repository contains a shell script to set up and configure Open WebUI with Ollama.
 
+## My System Configuration:
+- Processor: Intel Core i7-11800H (8 Cores, 16 Threads) @ 2.30GHz
+- RAM: 16GB
+- GPU: NVIDIA GeForce RTX 3050 Ti Laptop GPU
+
 ## Prerequisites
 
 Before running the script, ensure you have the following installed on your system:
