@@ -35,6 +35,45 @@ services:
     restart: unless-stopped
     ports:
       - "3000:8080"
+    environment:
+      ENABLE_RAG_WEB_SEARCH: true
+      RAG_WEB_SEARCH_ENGINE: "searxng"
+      RAG_WEB_SEARCH_RESULT_COUNT: 2
+      RAG_WEB_SEARCH_CONCURRENT_REQUESTS: 5
+      SEARXNG_QUERY_URL: "http://searxng:8080/search?q=<query>&format=json"
+
+  searxng:
+    container_name: searxng
+    image: searxng/searxng:latest
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./searxng:/etc/searxng:rw
+    env_file:
+      - .env
+    environment:
+      SEARXNG_SEARCH_FORMATS: "html json"
+    restart: unless-stopped
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - SETGID
+      - SETUID
+      - DAC_OVERRIDE
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1m"
+        max-file: "1"
+
+  watchtower:
+    image: containrrr/watchtower
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: --interval 300 open-webui
+    depends_on:
+      - open-webui
 
 volumes:
   auto1111-data:
